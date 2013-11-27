@@ -15,10 +15,11 @@ public class DbUtil {
 		// 初始化连接池
 		BasicDataSource dSource = new BasicDataSource();
 		// 设置连接池的属性
-		dSource.setDriverClassName("org.git.mm.mysql.Driver");
+		dSource.setDriverClassName("com.mysql.jdbc.Driver");
 		dSource.setUrl("jdbc:mysql:///spring_learn");
 		dSource.setUsername("root");
 		dSource.setPassword("root");
+		datasource = dSource;
 	}
 
 	public static Connection getConn() throws SQLException {
