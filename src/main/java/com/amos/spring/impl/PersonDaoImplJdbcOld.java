@@ -9,6 +9,13 @@ import com.amos.spring.dao.DbUtil;
 import com.amos.spring.dao.IpersonDao;
 import com.amos.spring.model.Person;
 
+/** 
+* @ClassName: PersonDaoImplJdbcOld 
+* @Description: 最原始的操作
+* @author: amosli
+* @email:amosli@infomorrow.com
+* @date Nov 28, 2013 12:15:20 AM  
+*/
 public class PersonDaoImplJdbcOld implements IpersonDao {
 
 	public void save(Person p) {
