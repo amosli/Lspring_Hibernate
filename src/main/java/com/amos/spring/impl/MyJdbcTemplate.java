@@ -28,7 +28,30 @@ public class MyJdbcTemplate {
 	/**
 	 * 执行数据库操作
 	 */
-	public void excuteUpdate(UpdateOperation operation) {
+	public void ExcuteUpdate(UpdateOperation operation) {
+		Connection conn = null;
+		Statement stmt = null;
+		try {
+			conn = DbUtil.getConn();
+			// 开取事务
+			conn.setAutoCommit(false);
+			// 初始化相关的Statment对象
+			stmt = conn.createStatement();
+			operation.execute(stmt);
+			// 提交事务
+			conn.commit();
+		} catch (Exception e) {
+			try {
+				if (conn != null)
+					conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		} finally {
+			DbUtil.close(null, stmt, conn);
+		}
+	}
+	public void excuteUpdate2(UpdateOperation operation) {
 		// 获得一个连接Connection
 		Connection conn = null;
 		Statement stmt = null;
@@ -55,7 +78,7 @@ public class MyJdbcTemplate {
 	}
 
 	public void excuteSql(final String sql) {
-		excuteUpdate(new UpdateOperation() {
+		ExcuteUpdate(new UpdateOperation() {
 			public void execute(Statement stmt) throws SQLException {
 				stmt.executeUpdate(sql);
 			}

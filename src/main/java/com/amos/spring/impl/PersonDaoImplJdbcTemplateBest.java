@@ -13,7 +13,7 @@ import com.amos.spring.model.Person;
 * @date Nov 28, 2013 12:14:48 AM  
 */
 public class PersonDaoImplJdbcTemplateBest implements IpersonDao {
-	private MyJdbcTemplate jdbcTemplate;
+	private MyJdbcTemplate jdbcTemplate=new MyJdbcTemplate();
 
 	public List<Person> loadAll() {
 		return null;
@@ -33,7 +33,6 @@ public class PersonDaoImplJdbcTemplateBest implements IpersonDao {
 	public void delete(Long id) {
 		String sql = "delete person where id='" + id + "'";
 		jdbcTemplate.excuteSql(sql);
-
 	}
 
 }
