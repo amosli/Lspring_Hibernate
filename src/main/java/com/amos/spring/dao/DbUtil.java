@@ -9,6 +9,13 @@ import javax.sql.DataSource;
 
 import org.apache.commons.dbcp.BasicDataSource;
 
+/** 
+* @ClassName: 传统的操作数据库的方式  
+* @Description: TODO
+* @author: amosli
+* @email:amosli@infomorrow.com
+* @date Nov 28, 2013 2:03:23 AM  
+*/
 public class DbUtil {
 	private static DataSource datasource;
 	static {
