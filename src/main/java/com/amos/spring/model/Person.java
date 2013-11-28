@@ -20,6 +20,11 @@ public class Person {
 		return id;
 	}
 
+	@Override
+	public String toString() {
+		return "Person [id=" + id + ", name=" + name + ", age=" + age + "]";
+	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
