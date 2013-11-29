@@ -18,8 +18,8 @@ public class TransferServiceTest {
 	public void saveMoney() {
 		ApplicationContext acx = new ClassPathXmlApplicationContext("bean_transaction.xml");
 		ITransferService service = acx.getBean(ITransferService.class);
-		service.saveMoney("a", 300d);
-		service.saveMoney("b", 300d);
+		service.saveMoney("a", 100d);
+		service.saveMoney("b", 100d);
 	}
 //	@Test
 	public void takeMoney() {
@@ -32,6 +32,6 @@ public class TransferServiceTest {
 	public void transferMoney() {
 		ApplicationContext acx = new ClassPathXmlApplicationContext("bean_transaction.xml");
 		ITransferService service = acx.getBean(ITransferService.class);
-		service.transferMoney("a", "a1", 100d);
+		service.transferMoney("a", "b", 299d);
 	}
 }

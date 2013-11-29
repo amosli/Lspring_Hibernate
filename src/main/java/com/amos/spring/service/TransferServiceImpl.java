@@ -19,7 +19,6 @@ public class TransferServiceImpl implements ITransferService {
 
 	public void saveMoney(String name, Double money) {
 		// 先查账户是否存在
-
 		Account account = accountDao.get(name);
 		if (account == null) {
 			// 不存在,第一次存钱
@@ -46,10 +45,14 @@ public class TransferServiceImpl implements ITransferService {
 	}
 
 	public void transferMoney(String from, String to, Double money) {
-		
+		if (accountDao.get(to) == null) {
+			throw new LogicException("目标账户不存在!");
+		}
+
 		// 先从from账上取钱
 		takeMoney(from, money);
-
+		// 去除手续费
+		takeMoney(from, money * 0.1);
 		// 把钱存到to账上
 		saveMoney(to, money);
 

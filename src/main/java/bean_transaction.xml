@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
 	           http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
 			   http://www.springframework.org/schema/context
 	           http://www.springframework.org/schema/context/spring-context-3.2.xsd
+	           http://www.springframework.org/schema/tx
+	           http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+	           http://www.springframework.org/schema/aop
+	           http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
 	           ">
 	<context:property-placeholder location="db.properties" />
 	<!-- 配置连接池 -->
@@ -23,5 +28,31 @@
 	<bean id="transferService" class="com.amos.spring.service.TransferServiceImpl">
 		<property name="accountDao" ref="accountDao"></property>
 	</bean>
+
+
+	<!-- 配置事务 -->
+	<!-- 配置一个事务管理器 -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="mydataSource"></property>
+	</bean>
+
+	<!-- 配置事务通知 -->
+	<tx:advice id="transferServieAdvice" transaction-manager="transactionManager">
+		<!-- 事务属性 -->
+		<tx:attributes>
+			<tx:method name="transferMoney" propagation="REQUIRED" />
+			<tx:method name="saveMoney" propagation="REQUIRED" />
+			<tx:method name="takeMoney" propagation="REQUIRES_NEW" />
+			<!-- 查询类的方法用下面的配置 ，不用强制开事务，则可以提升性能 -->
+			<tx:method name="*" propagation="SUPPORTS" read-only="true" />
+<!-- 			<tx:method name="*" propagation="REQUIRED" />
+ -->		</tx:attributes>
+	</tx:advice>
+	<aop:config>
+		<!-- 增强，对哪一些切一点(pointcut)进行什么样(advice-ref)的事务增强。 -->
+		<aop:advisor advice-ref="transferServieAdvice" pointcut="execution(* com.amos..*(..))" />
+	</aop:config>
+
 
 </beans>
