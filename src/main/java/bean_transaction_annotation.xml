@@ -25,7 +25,7 @@
 	</bean>
 
 	<!-- 配置service -->
-	<bean id="transferService" class="com.amos.spring.service.TransferServiceImpl">
+	<bean id="transferService" class="com.amos.spring.service.TransferServiceImplAnnotation">
 		<property name="accountDao" ref="accountDao"></property>
 	</bean>
 
@@ -36,24 +36,10 @@
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="mydataSource"></property>
 	</bean>
-
-	<!-- 配置事务通知 -->
-	<tx:advice id="transferServieAdvice" transaction-manager="transactionManager">
-		<!-- 事务属性 -->
-		<tx:attributes>
-			<tx:method name="transferMoney" propagation="REQUIRED" />
-			<tx:method name="saveMoney" propagation="REQUIRED" />
-			<tx:method name="takeMoney" propagation="REQUIRES_NEW" />
-			<!-- 查询类的方法用下面的配置 ，不用强制开事务，则可以提升性能 -->
-			<!-- 查询类的方法的配置 -->
-			<tx:method name="get*" propagation="SUPPORTS" read-only="true" />
-<!-- 			<tx:method name="*" propagation="REQUIRED" />
- -->		</tx:attributes>
-	</tx:advice>
-	<aop:config>
-		<!-- 增强，对哪一些切一点(pointcut)进行什么样(advice-ref)的事务增强。 -->
-		<aop:advisor advice-ref="transferServieAdvice" pointcut="execution(* com.amos..*(..))" />
-	</aop:config>
+	
+	
+	<!-- 表示事务的配置均在注解中 -->
+	<tx:annotation-driven/>
 
 
 </beans>
