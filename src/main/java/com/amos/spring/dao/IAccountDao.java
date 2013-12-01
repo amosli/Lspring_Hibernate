@@ -14,6 +14,7 @@ public interface IAccountDao {
 	 * 根据用户id获取账户信息
 	 */
 	Account get(Long id);
+	void  delete(Long id);
 	/*
 	 * 根据name获取账户信息
 	 */

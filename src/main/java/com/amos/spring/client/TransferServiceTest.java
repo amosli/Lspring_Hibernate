@@ -4,6 +4,9 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.amos.spring.dao.AccountDaoByHibernate;
+import com.amos.spring.dao.IAccountDao;
+import com.amos.spring.model.Account;
 import com.amos.spring.service.ITransferService;
 
 /**
@@ -28,11 +31,27 @@ public class TransferServiceTest {
 		service.takeMoney("a", 100d);
 		service.takeMoney("b", 100d);
 	}
-	@Test
+//	@Test
 	public void transferMoney() {
 		ApplicationContext acx = new ClassPathXmlApplicationContext("bean_transaction.xml");
 		ITransferService service = acx.getBean(ITransferService.class);
 		System.out.println(service.getClass());
 		service.transferMoney("a", "b", 299d);
 	}
+//	@Test
+	public void hibernateDao(){
+		Account a = new Account();
+		a.setName("abc");
+		a.setBalance(11d);
+		IAccountDao dao = new AccountDaoByHibernate();
+		dao.save(a);
+	}
+	@Test
+	public void transferMoneyHibernateOld() {
+		ApplicationContext acx = new ClassPathXmlApplicationContext("bean_transaction_hibernateold.xml");
+		ITransferService service = acx.getBean(ITransferService.class);
+		System.out.println(service.getClass());
+		service.transferMoney("a", "b", 299d);
+	}
+	
 }
