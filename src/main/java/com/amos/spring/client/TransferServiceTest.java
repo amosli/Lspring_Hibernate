@@ -3,6 +3,7 @@ package com.amos.spring.client;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.orm.hibernate3.LocalSessionFactoryBean;
 
 import com.amos.spring.dao.AccountDaoByHibernate;
 import com.amos.spring.dao.IAccountDao;
@@ -56,12 +57,23 @@ public class TransferServiceTest {
 		System.out.println(service.getClass());
 		service.transferMoney("a", "b", 299d);
 	}
-	@Test
+//	@Test
 	public void transferMoneyHibernateTemplate() {
 		/*
 		 * 使用Spring提供的hibernateTemplate来调用
 		 */
 		ApplicationContext acx = new ClassPathXmlApplicationContext("bean_transaction_hibernate_template.xml");
+		ITransferService service = acx.getBean(ITransferService.class);
+		System.out.println(service.getClass());
+		service.transferMoney("a", "b", 299d);
+	}
+	
+//	@Test
+	public void transferMoneyHibernateDaoSupport() {
+		/*
+		 * 使用Spring推荐的与hibernate整合的方式来实现DAO和集成  
+		 */
+		ApplicationContext acx = new ClassPathXmlApplicationContext("bean_transaction_hibernate_dao_support.xml");
 		ITransferService service = acx.getBean(ITransferService.class);
 		System.out.println(service.getClass());
 		service.transferMoney("a", "b", 299d);
