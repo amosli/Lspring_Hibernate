@@ -46,12 +46,26 @@ public class TransferServiceTest {
 		IAccountDao dao = new AccountDaoByHibernate();
 		dao.save(a);
 	}
-	@Test
+//	@Test
 	public void transferMoneyHibernateOld() {
+		/*
+		 * 使用hibernate配置文件去调用hibernate
+		 */
 		ApplicationContext acx = new ClassPathXmlApplicationContext("bean_transaction_hibernateold.xml");
 		ITransferService service = acx.getBean(ITransferService.class);
 		System.out.println(service.getClass());
 		service.transferMoney("a", "b", 299d);
 	}
+	@Test
+	public void transferMoneyHibernateTemplate() {
+		/*
+		 * 使用Spring提供的hibernateTemplate来调用
+		 */
+		ApplicationContext acx = new ClassPathXmlApplicationContext("bean_transaction_hibernate_template.xml");
+		ITransferService service = acx.getBean(ITransferService.class);
+		System.out.println(service.getClass());
+		service.transferMoney("a", "b", 299d);
+	}
+	
 	
 }

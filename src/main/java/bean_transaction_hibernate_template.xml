@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	           http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+			   http://www.springframework.org/schema/context
+	           http://www.springframework.org/schema/context/spring-context-3.2.xsd
+	           http://www.springframework.org/schema/tx
+	           http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+	           http://www.springframework.org/schema/aop
+	           http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+	           ">
+	
+	<!-- 配置一个SessionFactory,使用我们自己写的工具类来获取SessionFactory -->
+	<bean id="mysessionFactory" class="com.amos.spring.dao.HibernateUtil" factory-method="getFactory">
+	</bean>
+	<!-- 配置一个使用HiberanteTemplate对象 -->
+	<bean id="myTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+	<property name="sessionFactory" ref="mysessionFactory"></property>
+	</bean>
+	<!-- 配置一个使用hibernateTemplate的dao-->	     
+	<bean id="accountDao"	class="com.amos.spring.dao.AccountDaoByHibernateTemplate">
+	<property name="template" ref="myTemplate"></property>
+	</bean>
+	<bean id="transferService" class="com.amos.spring.service.TransferServiceImpl2">
+	<property name="accountDao" ref="accountDao"></property>
+	</bean>
+	
+	<!-- 配置事务管理 -->
+	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+	<!-- 事务管理器作用于哪个SessionFactory -->
+	<property name="sessionFactory" ref="mysessionFactory"></property>
+	</bean>
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+</beans>

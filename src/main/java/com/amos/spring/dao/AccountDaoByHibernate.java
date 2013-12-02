@@ -12,7 +12,6 @@ public class AccountDaoByHibernate implements IAccountDao {
 
 	public void save(Account account) {
 		Session session = HibernateUtil.getSession();
-		;
 		Transaction transaction = session.beginTransaction();
 		try {
 			session.save(account);
