@@ -37,15 +37,12 @@ public class AccountDaoByHibernateDaoSupport extends HibernateDaoSupport impleme
 	}
 
 	public Account get(String name) {
-		// TODO Auto-generated method stub
-		return null;
+		return getHibernateTemplate().get(Account.class, name);
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<Account> loadAll() {
-		
 		return getHibernateTemplate().find("from account");
-		
 	}
 
 	public List<Account> query(final String scope, final Object[] parameters, final int begin, final int max) {

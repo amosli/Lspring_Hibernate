@@ -2,6 +2,8 @@ package com.amos.spring.service;
 
 import java.util.List;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import com.amos.spring.dao.IAccountDao;
 import com.amos.spring.model.Account;
 
@@ -12,6 +14,7 @@ import com.amos.spring.model.Account;
  * @email:amosli@infomorrow.com
  * @date Nov 29, 2013 1:25:27 AM
  */
+@Transactional
 public class TransferServiceImpl2 implements ITransferService {
 	private IAccountDao accountDao;
 
